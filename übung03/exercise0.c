@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 
 void string_concat (char out[], char string1[], char string2[])
 {
+	if(strlen(string1) + strlen(string2) < strlen(out)) 
+	{
 	// i stores the current index for out
 	int i = 0;
 
@@ -25,7 +28,7 @@ void string_concat (char out[], char string1[], char string2[])
 
 	// add null-byte at the end
 	out[i] = '\0';
-}
+}}
 
 int main (void)
 {

@@ -30,10 +30,10 @@ struct foobar
 
 int main (void)
 {
-	struct foobar a = { FOO, { .foo = { 42, 23 } } };
+	struct foobar a = { FOO,  { .foo = { 42, 23 } } };
 	printf("foo: %d %d\n", a.data.foo.a, a.data.foo.b);
 	
-	struct foobar b = { BAR, { .bar = { 42.0, 23.0 } } };
+	struct foobar b = { BAR,  { .bar = { 42.0, 23.0 } } };
 	printf("bar: %f %f\n", b.data.bar.a, b.data.bar.b);
 
 	printf("sizeof(struct foobar) = %d\n", sizeof(struct foobar));
