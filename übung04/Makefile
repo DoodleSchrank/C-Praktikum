@@ -1,1 +1,1 @@
-all: exercise0 exercise1
+all: exercise0 exercise1 exercise2
