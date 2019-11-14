@@ -14,11 +14,11 @@ void heapvstack (int zahl)
 
 	printf("Heap:\n--------------------------------\n");
 	printf("Wert: %d\n", *heapint);
-	printf("Zeiger-Adresse: %d\n", heapint);
+	printf("Zeiger-Adresse: %p\n", heapint);
 	
 	printf("\n\nStack:\n--------------------------------\n");
 	printf("Wert: %d\n", stackint);
-	printf("Zeiger-Adresse: %d\n", &stackint);
+	printf("Zeiger-Adresse: %p\n", &stackint);
 	free(heapint);
 }
 
