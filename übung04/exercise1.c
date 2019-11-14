@@ -4,15 +4,15 @@
 struct arrdata
 {
 	int *pointer;
-	int size;
+	size_t length;
 };
 
 
 void expandArray(struct arrdata *arrdata)
 {
-	arrdata->size++;
-	arrdata->pointer = realloc(arrdata->pointer, arrdata->size * sizeof(int));
-	arrdata->pointer[arrdata->size - 1] = 0;
+	arrdata->length++;
+	arrdata->pointer = realloc(arrdata->pointer, arrdata->length * sizeof(int));
+	arrdata->pointer[arrdata->length - 1] = 0;
 }
 
 
@@ -20,12 +20,12 @@ int main (void)
 {
 	struct arrdata *arrdata = malloc(sizeof(arrdata));
 	arrdata->pointer = malloc(sizeof(int));
-	arrdata->size = 1;
+	arrdata->length = 1;
 	
 	expandArray(arrdata);
 	expandArray(arrdata);
 	
-	for(int i = 0; i < arrdata->size; i++)
+	for(int i = 0; i < arrdata->length; i++)
 	{
 		printf("%d ", arrdata->pointer[i]);
 	}
