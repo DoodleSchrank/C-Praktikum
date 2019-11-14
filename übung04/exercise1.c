@@ -1,36 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct arrdata
+typedef struct
 {
 	int *pointer;
 	size_t length;
-};
+} intArray;
 
 
-void expandArray(struct arrdata *arrdata)
+void expandArray(intArray *array)
 {
-	arrdata->length++;
-	arrdata->pointer = realloc(arrdata->pointer, arrdata->length * sizeof(int));
-	arrdata->pointer[arrdata->length - 1] = 0;
+	array->length++;
+	array->pointer = realloc(array->pointer, array->length * sizeof(int));
+	array->pointer[array->length - 1] = 0;
 }
 
 
 int main (void)
 {
-	struct arrdata *arrdata = malloc(sizeof(arrdata));
-	arrdata->pointer = malloc(sizeof(int));
-	arrdata->length = 1;
+	intArray *array = malloc(sizeof(intArray));
+	array->pointer = malloc(sizeof(int));
+	array->length = 1;
 	
-	expandArray(arrdata);
-	expandArray(arrdata);
+	expandArray(array);
+	expandArray(array);
 	
-	for(int i = 0; i < arrdata->length; i++)
+	for(int i = 0; i < array->length; i++)
 	{
-		printf("%d ", arrdata->pointer[i]);
+		printf("%d ", array->pointer[i]);
 	}
 	
-	free(arrdata->pointer);
-	free(arrdata);
+	free(array->pointer);
+	free(array);
 	return 0;
 }
