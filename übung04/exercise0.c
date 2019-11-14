@@ -1,29 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void heapvstack (int zahl)
+void printPointer (int *i)
 {
-	int *heapint = malloc(sizeof(int));
-	if(heapint == NULL)
-  { 
-		printf("Error beim Speicherzuweisen.");
-		exit(0);
-	}
-  *heapint = zahl; 
-	int stackint = zahl;
-
-	printf("Heap:\n--------------------------------\n");
-	printf("Wert: %d\n", *heapint);
-	printf("Zeiger-Adresse: %p\n", heapint);
-	
-	printf("\n\nStack:\n--------------------------------\n");
-	printf("Wert: %d\n", stackint);
-	printf("Zeiger-Adresse: %p\n", &stackint);
-	free(heapint);
+	printf("Wert: %d\n", *i);
+	printf("Zeiger-Adresse: %p\n", i);
 }
 
 int main (void)
 {
-	heapvstack(5);
+	int *heap = malloc(sizeof(int));
+	if(heap == NULL)
+	{ 
+		printf("Error beim Speicherzuweisen.");
+		exit(0);
+	}
+	*heap = 42;
+
+	printf("Heap:\n--------------------------------\n");
+	printPointer(heap);
+
+	free(heap);
+
+	int stack = 1337;
+	printf("\nStack:\n--------------------------------\n");
+	printPointer(&stack);
+
 	return 0;
 }
