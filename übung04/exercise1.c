@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
+typedef struct intArray
 {
 	int *pointer;
 	size_t length;
@@ -18,19 +18,20 @@ void expandArray(intArray *array)
 
 int main (void)
 {
-	intArray *array = malloc(sizeof(intArray));
-	array->pointer = malloc(sizeof(int));
-	array->length = 1;
+	// initialize array with 1 element
+	intArray array = {
+		pointer: calloc(1, sizeof(int)),
+		length: 1
+	};
 	
-	expandArray(array);
-	expandArray(array);
+	expandArray(&array);
+	expandArray(&array);
 	
-	for(int i = 0; i < array->length; i++)
+	for(int i = 0; i < array.length; i++)
 	{
-		printf("%d ", array->pointer[i]);
+		printf("%d ", array.pointer[i]);
 	}
 	
-	free(array->pointer);
-	free(array);
+	free(array.pointer);
 	return 0;
 }
