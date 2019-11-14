@@ -13,7 +13,7 @@ int main (void)
 	if(heap == NULL)
 	{ 
 		printf("Error beim Speicherzuweisen.");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	*heap = 42;
 
@@ -26,5 +26,5 @@ int main (void)
 	printf("\nStack:\n--------------------------------\n");
 	printPointer(&stack);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
