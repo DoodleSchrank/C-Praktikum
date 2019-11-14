@@ -7,13 +7,24 @@ int* allocSomeMemory()
 
 int main (void)
 {
-	int *errone = allocSomeMemory();//allocate some memory, first error because it never gets freed -> lecken
-	int *errtwo = allocSomeMemory();//allocate some more memory
-	static int errthree;		//static allocation
-	free(errtwo);			//frees memory too make 2nd and 4th error happen
-	*errtwo = 5;			//2nd error, because memory is no longer allocated
-	free(&errthree);		//3rd error, trying to free statically allocated memory
-	int *errfour = errtwo;		//4th error, trying to read from unallocated memory
-	free(errtwo);			//5th error, trying to free memory that has already been freed
+	// 1. Speicherleck
+	int *leak = allocSomeMemory(); // allocate some memory but never free => leak
+	
+	// 2. Variablennutzung nach free()
+	int *useAfterFree = allocSomeMemory();
+	free(useAfterFree);
+	*useAfterFree = 42; // error, because memory is no longer allocated
+
+	// 3. Freigabe vom nicht dynamisch reservierten Speicher
+	static int freeNonHeap; // static allocation
+	free(&freeNonHeap);		// trying to free statically allocated memory
+
+	// 4. Zugriff auf nicht reservierten Speicher
+	printf("%d\n", *(leak+64)); // trying to read from unallocated memory
+
+	// 5. Mehrfacher Aufruf von free()
+	int *alreadyFree = useAfterFree;
+	free(alreadyFree); // trying to free memory that has already been freed
+
 	return 0;
 }
