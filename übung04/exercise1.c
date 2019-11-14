@@ -15,6 +15,15 @@ void expandArray(intArray *array)
 	array->pointer[array->length - 1] = 0;
 }
 
+void printArray(intArray array)
+{
+	for (int i = 0; i < array.length; i++)
+	{
+		printf("%d ", array.pointer[i]);
+	}
+	printf("\n");
+}
+
 
 int main (void)
 {
@@ -27,10 +36,7 @@ int main (void)
 	expandArray(&array);
 	expandArray(&array);
 	
-	for(int i = 0; i < array.length; i++)
-	{
-		printf("%d ", array.pointer[i]);
-	}
+	printArray(array);
 	
 	free(array.pointer);
 	return 0;
