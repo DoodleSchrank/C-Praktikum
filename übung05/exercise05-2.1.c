@@ -13,5 +13,5 @@ int main() {
 	int c = divide(a, b, &rest);
 	assert(c == 7);
 	assert(rest == 42);
-	printf("%d, %d, %d, %d\n", a, b, c, rest);
+	printf("%d/%d=%d, Rest: %d\n", a, b, c, rest);
 }
