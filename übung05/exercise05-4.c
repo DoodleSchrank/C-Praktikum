@@ -2,10 +2,11 @@
 #include <limits.h>
 
 void summary (int *arr, size_t size, int *max, int *min, double *mean) {
+	// initialize values
 	if (max) *max = INT_MIN;
 	if (min) *min = INT_MAX;
 	if (mean) *mean = 0.0;
-	
+
 	for (int i = 0; i < (int) size; i++)
 	{
 		if (max && arr[i] > *max) *max = arr[i];
@@ -14,7 +15,6 @@ void summary (int *arr, size_t size, int *max, int *min, double *mean) {
 	}
 	// calculate mean
 	if (mean) *mean /= size;
-	printf("%d,  %d,  %f\n", *min, *max, *mean);
 }
 
 
@@ -30,6 +30,7 @@ int main (void) {
 		17 , 18 , 18 , 18 , 18 , 19 , 19 , 19 , 20 , 20   , 
 		20 , 20 , 20 , 22 , 23 , 24 , 24 , 24 , 24 , 25};
 	summary(cars_speed, sizeof(cars_speed)/sizeof(cars_speed[0]), &max, &min, &mean);
+	printf("Speed max: %d, min: %d, mean: %f\n", max, min, mean);
 
 	int car_dist[50] = {
 		2  , 10 , 4  , 22 , 16 , 10 , 18 , 26 , 34  , 17   , 
@@ -38,6 +39,7 @@ int main (void) {
 		50 , 42 , 56 , 76 , 84 , 36 , 46 , 68 , 32  , 48   , 
 		52 , 56 , 64 , 66 , 54 , 70 , 92 , 93 , 120 , 85};
 	summary(car_dist, sizeof(car_dist)/sizeof(car_dist[0]), &max, &min, &mean);
+	printf("Distance max: %d, min: %d, mean: %f\n", max, min, mean);
 
 	return 0;
 }
