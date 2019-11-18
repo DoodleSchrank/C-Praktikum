@@ -1,11 +1,18 @@
 #include <assert.h>
-#include <string.h>
-#include <stdio.h>
-int findCharPosition(char *string, char searchCharacter, char *out_pointer) {
-	char *index = strchr(string, searchCharacter);
-	printf("%p\n", out_pointer);
-	if (out_pointer) out_pointer = (*index) ? index : NULL;
-	return (index != NULL) ? index - string : -1;
+#include <stdlib.h>
+
+int findCharPosition(char* string, char searchCharacter, char** out_pointer) {
+	for (size_t i = 0; string[i] != '\0'; i++)
+	{
+		if (string[i] == searchCharacter)
+		{
+			if (out_pointer) *out_pointer = &string[i];
+			return i;
+		}
+	}
+
+	if (out_pointer) *out_pointer = NULL;
+	return -1;
 }
 
 int main() {
@@ -18,15 +25,14 @@ int main() {
 	result = findCharPosition(string2, ' ', NULL);
 	assert(result == 7);
 
-	char *charPosition = ' ';
-	printf("%p\n", charPosition);
-	result = findCharPosition(string2, 'd', charPosition);
+	char* charPosition;
+	result = findCharPosition(string2, 'd', &charPosition);
 	assert(result == 10);
 	assert(charPosition);
 	assert(*charPosition == 'd');
 	assert(charPosition == string2 + result);
 
-	result = findCharPosition(string1, 'a',  charPosition);
+	result = findCharPosition(string1, 'a', &charPosition);
 	assert(result == -1);
 	assert(!charPosition);
 }
