@@ -2,7 +2,7 @@
 #include <limits.h>
 
 void summary (int *arr, size_t size, int *max, int *min, double *mean) {
-  *max = INT_MIN;
+	*max = INT_MIN;
 	*min = INT_MAX;
 	*mean = 0.0;
 	for (int i = 0; i < (int) size; i++)
@@ -36,5 +36,6 @@ int main (void) {
 		50 , 42 , 56 , 76 , 84 , 36 , 46 , 68 , 32  , 48   , 
 		52 , 56 , 64 , 66 , 54 , 70 , 92 , 93 , 120 , 85};
 	summary(car_dist, sizeof(car_dist)/sizeof(car_dist[0]), &max, &min, &mean);
+
 	return 0;
 }
