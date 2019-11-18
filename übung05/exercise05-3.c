@@ -5,7 +5,7 @@ void textTriangle(char* string)
 	while(*string != '\0')
 	{
 		printf("%s\n", string);
-		string = string + sizeof(char);
+		string++;
 	}
 }
 

@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+
 int divide(int a, int b, int *rest)
 {
 	if (rest) *rest = a % b;
