@@ -2,7 +2,7 @@
 #include <stdio.h>
 int divide(int a, int b, int *rest)
 {
-	*rest = a % b;
+	if (rest) *rest = a % b;
 	return (a/b);
 }
 
