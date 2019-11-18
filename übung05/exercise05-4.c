@@ -2,16 +2,18 @@
 #include <limits.h>
 
 void summary (int *arr, size_t size, int *max, int *min, double *mean) {
-	*max = INT_MIN;
-	*min = INT_MAX;
-	*mean = 0.0;
+	if (max) *max = INT_MIN;
+	if (min) *min = INT_MAX;
+	if (mean) *mean = 0.0;
+	
 	for (int i = 0; i < (int) size; i++)
 	{
-		*max = (arr[i] > *max) ? arr[i] : *max;
-		*min = (arr[i] < *min) ? arr[i] : *min;
-		*mean += arr[i];
+		if (max && arr[i] > *max) *max = arr[i];
+		if (min && arr[i] < *min) *min = arr[i];
+		if (mean) *mean += arr[i];
 	}
-	*mean /= size;
+	// calculate mean
+	if (mean) *mean /= size;
 	printf("%d,  %d,  %f\n", *min, *max, *mean);
 }
 
