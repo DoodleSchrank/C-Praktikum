@@ -5,7 +5,7 @@ INCLUDES =
 LFLAGS =
 LIBS = -lm
 
-SRCS := exercise05-1.c exercise05-2.1.c exercise05-2.2.c exercise05-4.c
+SRCS := exercise05-1.c exercise05-2.1.c exercise05-2.2.c exercise05-3.c exercise05-4.c
 OBJS = $(SRCS:.c=.o)
 MAIN = $(SRCS:.c=.x)
 
@@ -26,3 +26,4 @@ clean:
 
 cleanall: clean
 	$(RM) $(MAIN)
+	$(RM) *.x
