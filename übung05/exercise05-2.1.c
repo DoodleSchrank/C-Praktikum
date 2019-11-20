@@ -3,8 +3,8 @@
 
 int divide(int a, int b, int *rest)
 {
-	if (rest) *rest = a % b;
-	return (a/b);
+	if (rest) *rest = a % b; // if rest != NULL save modulo of a and b into give address, else do nothing
+	return (a/b);            // returns a/b as integer -> result gets floored
 }
 
 int main() {
@@ -14,5 +14,7 @@ int main() {
 	int c = divide(a, b, &rest);
 	assert(c == 7);
 	assert(rest == 42);
+
+	// print stuff
 	printf("%d/%d=%d, Rest: %d\n", a, b, c, rest);
 }

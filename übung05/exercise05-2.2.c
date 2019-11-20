@@ -2,10 +2,13 @@
 #include <stdlib.h>
 
 int findCharPosition(char* string, char searchCharacter, char** out_pointer) {
+
+	// loop through string and compare each character to searchCharacter
 	for (size_t i = 0; string[i] != '\0'; i++)
 	{
 		if (string[i] == searchCharacter)
 		{
+			// when out_pointer is given and the character has been found its address is written to out_pointer
 			if (out_pointer) *out_pointer = &string[i];
 			return i;
 		}
@@ -26,6 +29,8 @@ int main() {
 	assert(result == 7);
 
 	char* charPosition;
+
+	// give address of charPosition for returning the address of searched char
 	result = findCharPosition(string2, 'd', &charPosition);
 	assert(result == 10);
 	assert(charPosition);

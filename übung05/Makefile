@@ -23,7 +23,4 @@ $(MAIN):%.x: %.o
 
 clean:
 	$(RM) $(OBJS)
-
-cleanall: clean
 	$(RM) $(MAIN)
-	$(RM) *.x
