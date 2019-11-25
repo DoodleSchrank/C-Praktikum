@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdio.h>
 
 int divide(int a, int b, int *rest)
 {
@@ -14,7 +13,4 @@ int main() {
 	int c = divide(a, b, &rest);
 	assert(c == 7);
 	assert(rest == 42);
-
-	// print stuff
-	printf("%d/%d=%d, Rest: %d\n", a, b, c, rest);
 }
