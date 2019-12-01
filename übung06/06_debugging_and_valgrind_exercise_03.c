@@ -10,6 +10,7 @@ typedef struct
 	int x, y;
 } myCoordinate;
 
+// Listenstruktur braucht Nodes
 typedef struct node
 {
 	myCoordinate *koordinaten;
@@ -34,6 +35,7 @@ node_t *createStructStorage()
 	return NULL;
 }
 
+// Erstellt neue Node und weist ihr Speicher zu
 node_t *createNode(myCoordinate *item)
 {
 	node_t *node = malloc(sizeof(node_t));
@@ -42,6 +44,7 @@ node_t *createNode(myCoordinate *item)
 	return node;
 }
 
+// Befreit Speicher von Node und Koordinaten, falls vorhanden
 void freeNode(node_t *node)
 {
 	// breche ab, wenn node leer
@@ -58,18 +61,16 @@ void freeNode(node_t *node)
 // Koordinaten-Structs wird freigegeben
 void freeStructStorage(node_t *head)
 {
-	// breche ab, wenn head leer
-	if (head == NULL) return;
-
-	if (head->next)
-	{
-		// rekursives freigeben der heade
-		freeStructStorage(head->next);
-	}
-
-	freeNode(head);
+    node_t *prev;
+    while(head)
+    {
+        prev = head;
+        head = head->next;
+        freeNode(prev);
+    }
 }
 
+// Gibt Node an Position pos aus
 node_t *getNode(node_t *head, size_t pos)
 {
 	node_t *node = head;
@@ -88,6 +89,7 @@ node_t *getNode(node_t *head, size_t pos)
 	return node;
 }
 
+// Gibt Koordinaten von Node an Position pos aus
 myCoordinate *getItem(node_t *head, size_t pos)
 {
 	node_t *node = getNode(head, pos);
@@ -124,7 +126,7 @@ void insert(node_t **head, myCoordinate *item)
 // Füge ein neues Element an Position pos ein
 int insertAt(node_t **head, size_t pos, myCoordinate *item)
 {
-	// erstelle neues element
+	// erstelle neues Element
 	node_t *new = createNode(item);
 
 	// wenn Anfang: neues Element ist Anfang
@@ -155,7 +157,7 @@ int insertAt(node_t **head, size_t pos, myCoordinate *item)
 
 //##############################################################################
 
-// Gib die Koordinaten des Elements an Position pos aus
+// Druckt die Koordinaten des Elements an Position pos aus
 void printAt(node_t *head, size_t pos)
 {
 	myCoordinate *item = getItem(head, pos);
@@ -169,7 +171,7 @@ void printAt(node_t *head, size_t pos)
 	}
 }
 
-// Gib die Koordinaten der Elemente zwischen den Positionen pos1 und pos2 aus
+// Druckt die Koordinaten zwischen den Positionen pos1 und pos2 aus
 void printRange(node_t *head, size_t pos1, size_t pos2)
 {
 	// pos1 muss kleinergleich pos2 sein
@@ -185,7 +187,7 @@ void printRange(node_t *head, size_t pos1, size_t pos2)
 	}
 }
 
-// Gib die Koordinaten aller Elemente aus
+// Druckt die Koordinaten aller Elemente aus
 void printAll(node_t *head)
 {
 	node_t *curr = head;
@@ -235,9 +237,10 @@ int deleteAt(node_t **head, size_t pos)
 // Lösche alle Elemente zwischen den Positionen pos1 und pos2
 int deleteRange(node_t **head, size_t pos1, size_t pos2)
 {
-	// pos1 muss kleinergleich pos2 sein
+	// pos1 muss kleiner gleich pos2 sein
 	if (pos1 > pos2) return INVALID_INDEX;
 
+	// lässt Zeiger auf aktuellen Head auf letztes zu entfernendes Element zeigen
 	if (pos1 == 0)
 	{
 		node_t *end = getNode(*head, pos2);
@@ -246,6 +249,7 @@ int deleteRange(node_t **head, size_t pos1, size_t pos2)
 			printf("Invalid index %ld.\n", pos2);
 			return INVALID_INDEX;
 		}
+		// der alte Kopf wird gespeichert, damit vom alten Kopf bis n - 1 alles gelöscht werden kann
 		node_t *old = *head;
 		*head = end->next;
 		end->next = NULL;
@@ -259,7 +263,9 @@ int deleteRange(node_t **head, size_t pos1, size_t pos2)
 		printf("Invalid index %ld.\n", pos1);
 		return INVALID_INDEX;
 	}
-	
+
+	// Ruft diese Funktion erneut auf, allerdings beginnt die neue Liste mit dem ersten Element, welches gelöscht werden
+	// soll. Dadurch kommen wir in den großen IF-Block oben.
 	deleteRange(&prev->next, 0, pos2 - pos1);
 	return 0;
 }
@@ -273,6 +279,7 @@ void deleteAll(node_t **head)
 
 //##############################################################################
 
+// Gibt Größe/Länge/# der Elemente der Liste aus
 size_t getSize(node_t *head)
 {
 	size_t numElements = 0;
