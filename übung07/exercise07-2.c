@@ -21,8 +21,8 @@ double foo(double x, double y)
 	//(0.0, -1.0) (0.0, 1.0) (0.0, 3.0) (0.0, 5.0)
 	//(0.5, -1.0) (0.5, 1.0) (0.5, 3.0) (0.5, 5.0)
 	//(1.0, -1.0) (1.0, 1.0) (1.0, 3.0) (1.0, 5.0)
-void fillMatrixWithResults(int height, double y_min, double y_max,
-						   int width, double x_min, double x_max,
+void fillMatrixWithResults(size_t height, double y_min, double y_max,
+						   size_t width, double x_min, double x_max,
 						   double data[height][width], double (*function)(double, double)) 
 {
 	// Calculate stepheight for x and y axis
@@ -30,9 +30,9 @@ void fillMatrixWithResults(int height, double y_min, double y_max,
 	double height_step = (y_max - y_min) / (height - 1);
 
 	// Loop through every entry in the array
-	for(int y = 0; y < height; y++)
+	for(size_t y = 0; y < height; y++)
 	{
-		for(int x = 0; x < width; x++)
+		for(size_t x = 0; x < width; x++)
 		{
 			// Set datapoint to result of callback function
 			// Some additional math for correct stepping was required
