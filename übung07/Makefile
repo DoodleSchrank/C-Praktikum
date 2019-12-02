@@ -2,7 +2,7 @@ RM = rm -rf
 CC = gcc
 CFLAGS = -Wpedantic -Wall -Wextra -ggdb -Og
 INCLUDES =
-LFLAGS =
+LFLAGS = -lm
 LIBS =
 
 SRCS := $(wildcard *.c)
@@ -19,10 +19,8 @@ $(MAIN):%: %.o
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
-.PHONY: clean cleanall
+.PHONY: clean
 
 clean:
 	$(RM) $(OBJS)
-
-cleanall: clean
 	$(RM) $(MAIN)
