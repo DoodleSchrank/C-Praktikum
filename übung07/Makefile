@@ -5,24 +5,22 @@ INCLUDES =
 LFLAGS =
 LIBS = -lm
 
-SRCS := 2dArrayCall.c Callback.c Integration.c
+SRCS := $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
-MAIN = $(SRCS:.c=.x)
+MAIN = $(SRCS:.c=)
 
 all: $(MAIN)
 	@echo  Build ${MAIN}
 
-$(MAIN):%.x: %.o
+$(MAIN):%: %.o
 	@echo Building $@
 	$(CC) $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
-.PHONY: clean cleanall
+.PHONY: clean
 
 clean:
 	$(RM) $(OBJS)
-
-cleanall: clean
 	$(RM) $(MAIN)
