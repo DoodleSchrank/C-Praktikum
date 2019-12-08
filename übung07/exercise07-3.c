@@ -8,10 +8,12 @@ double multiply(double x, double y)
 {
 	return x * y;
 }
+
 double sinufy(double x, double y)
 {
 	return sin(x) * sin(y);
 }
+
 double maxify(double x, double y)
 {
 	return (x > y) ? x : y;
@@ -19,10 +21,10 @@ double maxify(double x, double y)
 
 void func(double schrittweite, double min, double max, double (*function)(double, double))
 {
-int size = (max - min) / schrittweite + 1;
-double data[size][size];
-fillMatrixWithResults(size, min, max, size, min, max, data, function);
-print2dArray(size, size, data);
+	int size = (max - min) / schrittweite + 1;
+	double data[size][size];
+	fillMatrixWithResults(size, min, max, size, min, max, data, function);
+	print2dArray(size, size, data);
 }
 
 int main(void)

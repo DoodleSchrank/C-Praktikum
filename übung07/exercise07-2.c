@@ -49,8 +49,8 @@ int main() {
 	const double y_min = 1, y_max = 3;
 
 	fillMatrixWithResults(height, y_min, y_max,
-	width, x_min, x_max,
-	data, &foo);
+	                      width, x_min, x_max,
+	                      data, &foo);
 
 	//may be used, is not required for grading
 	//print2dArray(height, width, data);
