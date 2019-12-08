@@ -1,3 +1,9 @@
+# ignore files with no extension
+*/*
+!*.*
+!*/
+
 *.x
 *.o
 *.out
+*.tar.gz
