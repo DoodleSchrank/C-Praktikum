@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -23,9 +24,35 @@ char* formatMoney(int64_t cents) {
 	return result;
 }
 
-char* formatMoney1(int64_t cents) { /*TODO*/ }
-void formatMoney2(int64_t cents, FILE* stream) { /*TODO*/ }
-char* formatMoney3(int64_t cents) { /*TODO*/ }
+char* formatMoney1(int64_t cents) {
+	bool isNegative = cents < 0;
+	cents = (isNegative ? -cents : cents);
+	int64_t euros = cents/100;
+	cents -= 100*euros;
+
+	char* result;
+	asprintf(&result, "%s%"PRId64".%02"PRId64" euros", (isNegative ? "-" : ""), euros, cents);
+	return result;
+}
+void formatMoney2(int64_t cents, FILE* stream) 
+{
+	bool isNegative = cents < 0;
+	cents = (isNegative ? -cents : cents);
+	int64_t euros = cents/100;
+	cents -= 100*euros;
+	
+	fprintf(stream, "%s%"PRId64".%02"PRId64" euros", (isNegative ? "-" : ""), euros, cents);
+}
+char* formatMoney3(int64_t cents) {
+	char *result;
+	size_t size;
+	
+	FILE *stream = open_memstream(&result, &size);
+	formatMoney2(cents, stream);
+	fclose(stream);
+	
+	return result;
+}
 
 void printMoney(uint64_t cents, char* (*formatter)(int64_t cents)) {
 	char* string = formatter(cents);
