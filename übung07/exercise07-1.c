@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-voidprint2dArray(size_t height, size_t width, double data[height][width])
+void print2dArray(size_t height, size_t width, double data[height][width])
 {
 	for(size_t x=0; x < width; x++)
 	{
