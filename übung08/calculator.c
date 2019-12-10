@@ -21,18 +21,18 @@ bool Stack_isEmpty(Stack* me)
 void Stack_push(Stack* me, double value)
 {
 	me->curCount++;
-	if((&me->data + me->curCount + 1) == (&me + me->allocatedSize))
+	if((void *) *(&me->data + me->curCount + 1) == (void *) *(&me + me->allocatedSize))
 	{
 		me = realloc(me, 2 * sizeof(size_t) + 2 * me->curCount * sizeof(double));
 		me->allocatedSize = 2 * sizeof(size_t) + 2 * me->curCount * sizeof(double);
 	}
-	(&me->data + me->curCount + 1) = value;
+	*(&me->data + me->curCount + 1) =  value;
 }
 double Stack_pop(Stack* me)
 {
 	me->curCount--;
-	double tos = (double) (me + 2 * sizeof(size_t) + me->curCount * sizeof(double));
-	(double *) ((me + 2 * sizeof(size_t) + me->curCount * sizeof(double))) = NULL;
+	double tos = (double) *(&me + 2 * sizeof(size_t) + me->curCount * sizeof(double));
+	*((&me + 2 * sizeof(size_t) + me->curCount * sizeof(double))) = NULL;
 	return tos;
 }
 void Stack_destruct(Stack* me)
