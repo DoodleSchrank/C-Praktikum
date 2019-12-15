@@ -8,36 +8,28 @@ typedef struct {
 	double* data;
 } Stack;
 
-void Stack_construct(Stack* me)
-{
-	me = malloc(sizeof(Stack));
-	me->curCount = 0;
-	me->allocatedSize = sizeof(Stack);
+void Stack_construct(Stack* me) {
+    me->data = malloc(sizeof(double));
+    me->curCount = 0;
+    me->allocatedSize = 1;
 }
-bool Stack_isEmpty(Stack* me)
-{
-	return me->curCount == 0;
+bool Stack_isEmpty(Stack* me) {
+    return (me->curCount == 0);
 }
-void Stack_push(Stack* me, double value)
-{
-	me->curCount++;
-	if(me->curCount * sizeof(double) + 2 * sizeof(size_t) == me->allocatedSize)
-	{
-		me = realloc(me, 2 * sizeof(size_t) + 2 * (me->curCount * sizeof(double)));
-		me->allocatedSize = 2 * sizeof(size_t) + 2 * (me->allocatedSize - 2 * sizeof(size_t));
-	}
-	*(me->data + me->curCount) = value;
+void Stack_push(Stack* me, double value) {
+    if (me->curCount+1 > me->allocatedSize) {
+        me->data = realloc(me->data, 2*(me->allocatedSize*sizeof(double)));
+        me->allocatedSize *= 2;
+    }
+    me->data[me->curCount] = value;
+    me->curCount++;
 }
-double Stack_pop(Stack* me)
-{
-	me->curCount--;
-	double tos = (double) **(&me->data + me->curCount * sizeof(double));
-	*((&me + 2 * sizeof(size_t) + me->curCount * sizeof(double))) = NULL;
-	return tos;
+double Stack_pop(Stack* me) {
+    me->curCount--;
+    return (double) me->data[me->curCount];
 }
-void Stack_destruct(Stack* me)
-{
-	free(me);
+void Stack_destruct(Stack* me) {
+    free(me->data);
 }
 
 double calculate(char* expression) {
