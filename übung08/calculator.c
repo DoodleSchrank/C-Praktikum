@@ -18,8 +18,8 @@ bool Stack_isEmpty(Stack* me) {
 }
 void Stack_push(Stack* me, double value) {
     if (me->curCount+1 > me->allocatedSize) {
-        me->data = realloc(me->data, 2*(me->allocatedSize*sizeof(double)));
         me->allocatedSize *= 2;
+        me->data = realloc(me->data, me->allocatedSize*sizeof(double));
     }
     me->data[me->curCount] = value;
     me->curCount++;
