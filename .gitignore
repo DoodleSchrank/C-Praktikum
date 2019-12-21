@@ -6,6 +6,7 @@
 
 *.x
 *.o
+*.i
 *.out
 *.tar.gz
 
