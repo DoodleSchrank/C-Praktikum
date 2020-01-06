@@ -1,0 +1,10 @@
+Wir konnten beobachten, dass bei steigendem Optimierungsgrad der Grad an reiner Berechnung sinkt,
+stattdessen wird vermehrt Logik berechnet (cmpl, addl, subl, etc.).
+
+Der Assemblercode ist in den Dateien "exercise09-3O" <jeweiliger Optimierungsgrad und evtl. funroll-loops ".s" zu finden.
+Dafür muss vorher einmal "make" ausgeführt werden.
+
+Unsere rohen Zeiten sind in "times.txt" enthalten, die Grafik trägt den Namen "performance.jpg".
+Erhalten haben wir sie mit dem Skript time.sh, welches vorig die jeweiligen kompilierten Dateien benötigt,
+welche mit beigelegter Makefile erstellt werden.
+Informationen über die CPU liegen in "cpu.txt" bei.
