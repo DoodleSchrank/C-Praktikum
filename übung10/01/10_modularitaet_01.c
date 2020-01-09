@@ -1,4 +1,4 @@
-#include "include/matrixOps.h"
+#include "10_matrixOps.h"
 
 int main()
 {
@@ -10,13 +10,13 @@ int main()
 	matrix mB = newMatrix(matrixDim);
 
 	// Addition
-	matrix mc1 = addMatrices(ma, mb, matrixDim);
-	printCalculation(ma, mb, mc1, "+");
+	matrix mc1 = addMatrices(mA, mB, matrixDim);
+	printCalculation(mA, mB, mc1, "+");
 
 	// Multiplikation
 	// // Addition
-	matrix mc2 = mulMatrices(ma, mb, matrixDim);
-	printCalculation(ma, mb, mc2, "*");
+	matrix mc2 = mulMatrices(mA, mB, matrixDim);
+	printCalculation(mA, mB, mc2, "*");
 
 	// Gib Matrix-Speicher wieder frei
 	freeMatrix(mA);
