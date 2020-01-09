@@ -10,7 +10,7 @@ typedef struct
 } matrix;
 
 
-matrix allocateMatrix(int matrixDim)
+matrix newMatrix(int matrixDim)
 {
 	matrix mat = {
 		malloc(sizeof(int**) * matrixDim),
@@ -20,22 +20,6 @@ matrix allocateMatrix(int matrixDim)
 	{
 		mat.data[i] = malloc(sizeof(int*) * matrixDim);
 	}
-	return mat;
-}
-matrix newCleanMatrix(int matrixDim)
-{
-	matrix mat = allocateMatrix(matrixDim);
-	for(int i = 0; i < matrixDim; i++)
-	{
-		for(int j = 0; j < matrixDim; j++)
-			mat.data[i][j] = 0;
-	}
-	return mat;
-}
-
-matrix newMatrix(int matrixDim)
-{
-	matrix mat = allocateMatrix(matrixDim);
 	srand(time(NULL));
 	for(int i = 0; i < matrixDim; i++)
 	{
@@ -47,7 +31,7 @@ matrix newMatrix(int matrixDim)
 
 matrix addMatrices(matrix ma, matrix mb, int matrixDim)
 {
-	matrix result = newCleanMatrix(matrixDim);
+	matrix result = newMatrix(matrixDim);
 
 	for(int i = 0; i < matrixDim; i++)
 	{
@@ -59,12 +43,13 @@ matrix addMatrices(matrix ma, matrix mb, int matrixDim)
 
 matrix mulMatrices(matrix ma, matrix mb, int matrixDim)
 {
-	matrix result = newCleanMatrix(matrixDim);
+	matrix result = newMatrix(matrixDim);
 
 	for(int i = 0; i < matrixDim; i++)
 	{
 		for(int j = 0; j < matrixDim; j++)
 		{
+			result.data[i][j] = 0.0;
 			for(int k = 0; k < matrixDim; k++)
 			{
 				result.data[i][j] += ma.data[i][k] * mb.data[k][j];
