@@ -5,94 +5,99 @@
 
 typedef struct
 {
-	int **data;
-	int dimension;
+    int dimension;
+	int** data;
 } matrix;
 
-
-matrix newMatrix(int matrixDim)
+matrix* newMatrix(int matrixDim)
 {
-	matrix mat = {
-		malloc(sizeof(int*) * matrixDim),
-		matrixDim,
-	};
+	matrix* mat;
+    mat = malloc(sizeof(int) + sizeof(int**));
+	mat->dimension = matrixDim;
+    mat->data = malloc(sizeof(int*) * matrixDim);
 	for(int i = 0; i < matrixDim; i++)
 	{
-		mat.data[i] = malloc(sizeof(int) * matrixDim);
+		mat->data[i] = malloc(sizeof(int) * matrixDim);
 	}
-	srand(time(NULL));
+    srand(time(NULL));
 	for(int i = 0; i < matrixDim; i++)
-	{
+	{ 
 		for(int j = 0; j < matrixDim; j++)
-			mat.data[i][j] = rand() % 10;
+			mat->data[i][j] = rand() % 10;
 	}
 	return mat;
 }
 
-matrix addMatrices(matrix ma, matrix mb, int matrixDim)
+matrix* addMatrices(matrix* ma, matrix* mb, int matrixDim)
 {
-	matrix result = newMatrix(matrixDim);
+	matrix* result = newMatrix(matrixDim);
 
 	for(int i = 0; i < matrixDim; i++)
 	{
 		for(int j = 0; j < matrixDim; j++)
-			result.data[i][j] = ma.data[i][j] + mb.data[i][j];
+			result->data[i][j] = ma->data[i][j] + mb->data[i][j];
 	}	
 	return result;
 }
 
-matrix mulMatrices(matrix ma, matrix mb, int matrixDim)
+matrix* mulMatrices(matrix* ma, matrix* mb, int matrixDim)
 {
-	matrix result = newMatrix(matrixDim);
+	matrix* result = newMatrix(matrixDim);
 
 	for(int i = 0; i < matrixDim; i++)
 	{
 		for(int j = 0; j < matrixDim; j++)
 		{
-			result.data[i][j] = 0.0;
-			for(int k = 0; k < matrixDim; k++)
-			{
-				result.data[i][j] += ma.data[i][k] * mb.data[k][j];
-			}
+			result->data[i][j] = 0.0;
+			for(int k = 0; k < matrixDim; k++) 
+                result->data[i][j] += ma->data[i][k] * mb->data[k][j];
 		}
 	}
 	return result;
 }
 
-void printCalculation(matrix ma, matrix mb, matrix mres, char *operation)
+void printCalculation(matrix* ma, matrix* mb,  matrix* mres, char *operation)
 {
 	char *symb;
-	for(int i = 0; i < ma.dimension; i++)
+	for(int i = 0; i < ma->dimension; i++)
 	{
-		for(int j = 0; j < ma.dimension; j++)
+        //1. Operand:
+		for(int j = 0; j < ma->dimension; j++)
 		{
-			printf("%4d", ma.data[i][j]);
+			printf("%4d", ma->data[i][j]);
 		}
-		if(i == ma.dimension / 2 + 1) symb = operation;
+        //Operator:
+		if(i == ma->dimension / 2) symb = operation;
 		else symb = "";
-		printf("%3s", symb);
+		printf("%4s", symb);
 		printf("  ");
-		for(int j = 0; j < ma.dimension; j++)
+        //2. Operand
+		for(int j = 0; j < ma->dimension; j++)
 		{
-			printf("%4d", mb.data[i][j]);
+			printf("%4d", mb->data[i][j]);
 		}
-		if(i == ma.dimension / 2 + 1) symb = "=";
+        //Gleichheitszeichen:
+		if(i == ma->dimension / 2) symb = "=";
 		else symb = "";
-		printf("%3s", symb);
+		printf("%4s", symb);
 		printf("  ");
-		for(int j = 0; j < ma.dimension; j++)
+        //Ergebnis:
+		for(int j = 0;
+        j < ma->dimension; j++)
 		{
-			printf("%4d", mres.data[i][j]);
+			printf("%4d", mres->data[i][j]);
 		}
 		printf("\n");
 	}
+    printf("\n");
 }
 
-void freeMatrix(matrix mat)
+void freeMatrix(matrix* mat)
 {
-	for(int i = 0; i < mat.dimension; i++)
+	for(int i = 0; i < mat->dimension; i++)
 	{
-		free(mat.data[i]);
+		free(mat->data[i]);
 	}
-	free(mat.data);
+	free(mat->data);
+    free(mat);
 }
