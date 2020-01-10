@@ -11,17 +11,15 @@ typedef struct
 
 matrix* newMatrix(int matrixDim)
 {
+    srand(time(0));
 	matrix* mat;
     mat = malloc(sizeof(int) + sizeof(int**));
 	mat->dimension = matrixDim;
     mat->data = malloc(sizeof(int*) * matrixDim);
-	for(int i = 0; i < matrixDim; i++)
-	{
-		mat->data[i] = malloc(sizeof(int) * matrixDim);
-	}
-    srand(time(NULL));
+
 	for(int i = 0; i < matrixDim; i++)
 	{ 
+		mat->data[i] = malloc(sizeof(int) * matrixDim);
 		for(int j = 0; j < matrixDim; j++)
 			mat->data[i][j] = rand() % 10;
 	}

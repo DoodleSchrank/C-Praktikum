@@ -1,5 +1,5 @@
 #!/bin/sh
-gcc -c  10_modularitaet_01.c
+gcc -c 10_modularitaet_01.c
 gcc -c libmatrix.c
 ar rcs libmatrix.a libmatrix.o
 gcc -o modularitaetStatic 10_modularitaet_01.o -L. -lmatrix
