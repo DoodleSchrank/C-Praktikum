@@ -7,10 +7,21 @@
 
 void read_file(int fd)
 {
-	int buf;
+	int buf, cnt = 0, ret;
+	FILE *outfile = fopen("output", "w");
 
-	// TODO
-	printf("int=%d at offset=%lu\n", buf, 0);
+	lseek(fd, 0, SEEK_SET);
+
+	ret = read(fd, &buf, sizeof(int));
+	while(ret == sizeof(int))
+	{
+		if(buf != 0)
+			fprintf(outfile, "int=%d at offset=%lu\n", buf, cnt);
+		cnt += sizeof(int);
+		ret = read(fd, &buf, sizeof(int));
+	}
+	fclose(outfile);
+	fflush(outfile);
 }
 
 int main(void)

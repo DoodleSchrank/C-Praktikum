@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+int file;
+
 struct array_element
 {
 	int age;
@@ -22,8 +24,17 @@ struct array
 
 void array_init(struct array* arr, off_t size)
 {
-	arr->size = size;
-	arr->count = 0;
+	file = open("myarray", O_RDWR | O_CREAT, 0600);
+	int filesize;
+	int ret = read(file, &filesize, sizeof(off_t));
+	
+	if(ret == 0)
+	{
+		arr->size = size;
+		arr->count = 0;
+	}
+	else
+		arr = mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
 }
 
 void array_reset(struct array* arr)
@@ -60,6 +71,8 @@ void array_print(struct array* arr)
 		struct array_element* e = array_get(arr, i);
 		printf("arr[%lu] = { %d, %s }\n", i, e->age, e->name);
 	}
+	munmap(arr , arr->size);
+	close(file);
 }
 
 int main(void)
