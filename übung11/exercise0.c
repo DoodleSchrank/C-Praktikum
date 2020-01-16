@@ -7,17 +7,14 @@
 
 void read_file(int fd)
 {
-	int buf, cnt = 0, ret;
+	int buf;
+	ssize_t offset = 0;
 
-	lseek(fd, 0, SEEK_SET);
-
-	ret = read(fd, &buf, sizeof(int));
-	while(ret == sizeof(int))
+	while(pread(fd, &buf, sizeof(buf), offset) == sizeof(buf))
 	{
 		if(buf != 0)
-			printf("int=%d at offset=%lu\n", buf, cnt);
-		cnt += sizeof(int);
-		ret = read(fd, &buf, sizeof(int));
+			printf("int=%d at offset=%lu\n", buf, offset);
+		offset += sizeof(buf);
 	}
 }
 
