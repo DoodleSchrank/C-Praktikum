@@ -8,7 +8,6 @@
 void read_file(int fd)
 {
 	int buf, cnt = 0, ret;
-	FILE *outfile = fopen("output", "w");
 
 	lseek(fd, 0, SEEK_SET);
 
@@ -16,12 +15,10 @@ void read_file(int fd)
 	while(ret == sizeof(int))
 	{
 		if(buf != 0)
-			fprintf(outfile, "int=%d at offset=%lu\n", buf, cnt);
+			printf("int=%d at offset=%lu\n", buf, cnt);
 		cnt += sizeof(int);
 		ret = read(fd, &buf, sizeof(int));
 	}
-	fclose(outfile);
-	fflush(outfile);
 }
 
 int main(void)
