@@ -7,8 +7,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-int file;
-
 struct array_element
 {
 	int age;
@@ -24,7 +22,7 @@ struct array
 
 void array_init(struct array* arr, off_t size)
 {
-    arr->size = size;
+	arr->size = size;
 	arr->count = 0;
 }
 
@@ -67,15 +65,27 @@ void array_print(struct array* arr)
 int main(void)
 {
 	struct array* arr;
-
-	//printf("%p\n", arr);
-	file = open("myarray", O_RDWR | O_CREAT, 0600);
-    arr = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
-    
-    //printf("file:%d\n arr:%p\n",file, arr);
+	int fd = open("myarray", O_RDWR | O_CREAT, 0644);
 	
-    //printf("%ld\n%ld\n", arr->size, arr->count);
-    array_init(arr, 1024);
+	off_t filesize = 1024;
+	size_t readsize = pread(fd, &filesize, sizeof(filesize), 0);
+	if (readsize != sizeof(filesize))
+	{
+		ftruncate(fd, filesize);
+	}
+	
+	arr = mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	if (arr == MAP_FAILED)
+	{
+		printf("mmap failed\n");
+		return 1;
+	}
+	
+	if (readsize != sizeof(filesize))
+	{
+		array_init(arr, filesize);
+	}
+
 	array_print(arr);
 
 	array_reset(arr);
@@ -89,8 +99,8 @@ int main(void)
 	array_append(arr, 21, "Paula Mustermann");
 	array_print(arr);
 
-	munmap(arr , arr->size);
-	close(file);
+	munmap(arr, filesize);
+	close(fd);
 
 	return 0;
 }
