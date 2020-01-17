@@ -91,7 +91,6 @@ int main(void)
 
 	munmap(arr , arr->size);
 	close(file);
-	free(arr);
 
 	return 0;
 }
