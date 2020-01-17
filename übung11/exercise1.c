@@ -24,7 +24,7 @@ struct array
 
 void array_init(struct array* arr, off_t size)
 {
-	arr->size = size;
+    arr->size = size;
 	arr->count = 0;
 }
 
@@ -68,15 +68,14 @@ int main(void)
 {
 	struct array* arr;
 
-	arr = malloc(1024);
-	
+	//printf("%p\n", arr);
 	file = open("myarray", O_RDWR | O_CREAT, 0600);
-	int filesize;
-	int ret = read(file, &filesize, sizeof(off_t));
-	if(ret)
-		arr = mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
-	else
-		array_init(arr, 1024);
+    arr = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
+    
+    //printf("file:%d\n arr:%p\n",file, arr);
+	
+    //printf("%ld\n%ld\n", arr->size, arr->count);
+    array_init(arr, 1024);
 	array_print(arr);
 
 	array_reset(arr);
