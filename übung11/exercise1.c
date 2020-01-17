@@ -24,17 +24,8 @@ struct array
 
 void array_init(struct array* arr, off_t size)
 {
-	file = open("myarray", O_RDWR | O_CREAT, 0600);
-	int filesize;
-	int ret = read(file, &filesize, sizeof(off_t));
-	
-	if(ret == 0)
-	{
-		arr->size = size;
-		arr->count = 0;
-	}
-	else
-		arr = mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
+	arr->size = size;
+	arr->count = 0;
 }
 
 void array_reset(struct array* arr)
@@ -71,8 +62,6 @@ void array_print(struct array* arr)
 		struct array_element* e = array_get(arr, i);
 		printf("arr[%lu] = { %d, %s }\n", i, e->age, e->name);
 	}
-	munmap(arr , arr->size);
-	close(file);
 }
 
 int main(void)
@@ -80,8 +69,14 @@ int main(void)
 	struct array* arr;
 
 	arr = malloc(1024);
-
-	array_init(arr, 1024);
+	
+	file = open("myarray", O_RDWR | O_CREAT, 0600);
+	int filesize;
+	int ret = read(file, &filesize, sizeof(off_t));
+	if(ret)
+		arr = mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, file, 0);
+	else
+		array_init(arr, 1024);
 	array_print(arr);
 
 	array_reset(arr);
@@ -95,6 +90,8 @@ int main(void)
 	array_append(arr, 21, "Paula Mustermann");
 	array_print(arr);
 
+	munmap(arr , arr->size);
+	close(file);
 	free(arr);
 
 	return 0;
