@@ -18,7 +18,6 @@ data* data_new_string (char const* content)
 {
     struct data* data;
 
-    data->is_string = malloc(sizeof(char));
     data->is_string = 0;
     data->length = strlen(content);
 
@@ -46,16 +45,6 @@ data* data_new_blob (char const* content, unsigned int length)
     data->ref_count = 0;
 
 	return data;
-    /*
-	struct data* data;
-
-    data->is_string = 0;
-    data->length = length;
-    data->content = malloc(length*sizeof(char));
-    data->ref_count = 0;
-    data->content = content;
-
-    return data;*/
 }
 
 data* data_ref (data* data)
@@ -79,7 +68,9 @@ char* data_as_string (data const* data)
 
 unsigned int data_hash (data const* data)
 {
-	return 0;
+    unsigned int hash = 0;
+    for (unsigned  int i = 0; i < data->length; i++) hash += (unsigned int) data->content[i];
+    return hash;
 }
 
 int data_cmp (data const* a, data const* b)
