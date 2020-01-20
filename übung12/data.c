@@ -7,8 +7,8 @@
 
 struct data
 {
-    char is_string;
-    unsigned int length;
+    short is_string;
+    size_t length;
     unsigned int ref_count;
     char* const content;
 };
@@ -16,46 +16,25 @@ struct data
 /* "content" is a null-terminated string. */
 data* data_new_string (char const* content)
 {
-    struct data* data;
+	size_t bytesize = strlen(content) * sizeof(char);
+  char* not_const = malloc(bytesize);
+  not_const = (char*) content;
 
-    data->is_string = malloc(sizeof(char));
-    data->is_string = 0;
-    data->length = strlen(content);
-
-    char* not_const = malloc(data->length*sizeof(char));
-    not_const = (char*) content;
-
-    memcpy(data->content, &not_const, sizeof(char*));
-    data->ref_count = 0;
-
+  data dat = {0, bytesize, 0, not_const};
+	data *data = &dat;
 	return data;
 }
 
 /* "content" is a blob of length "length". */
 data* data_new_blob (char const* content, unsigned int length)
 {
-    struct data* data;
+	size_t bytesize = length * sizeof(char);
+  char* not_const = malloc(bytesize);
+  not_const = (char*) content;
 
-    data->is_string = 1;
-    data->length = length;
-
-    char* not_const = malloc(data->length*sizeof(char));
-    not_const = (char*) content;
-
-    memcpy(data->content, &not_const, sizeof(char*));
-    data->ref_count = 0;
-
+  data dat = {1, bytesize, 0, not_const};
+	data *data = &dat;
 	return data;
-    /*
-	struct data* data;
-
-    data->is_string = 0;
-    data->length = length;
-    data->content = malloc(length*sizeof(char));
-    data->ref_count = 0;
-    data->content = content;
-
-    return data;*/
 }
 
 data* data_ref (data* data)
