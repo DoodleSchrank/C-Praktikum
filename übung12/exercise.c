@@ -68,7 +68,6 @@ int main (void)
 	qsort(array, 128, sizeof(data*), data_cmp_qsort_cb);
 
 
-	printf("reached checkpoint\n");
 	/* Print out array contents. */
 	for (unsigned int i = 0; i < 128; i++)
 	{
@@ -78,6 +77,7 @@ int main (void)
 		printf("Data #%u = %s\n", i, string);
 		free(string);
 	}
+	printf("reached checkpoint\n");
 
 end:
 	/* Remove array and hash table contents. */
