@@ -51,11 +51,9 @@ void data_unref (data* data)
 /* Returns a newly-allocated string that must be freed by the caller. */
 char* data_as_string (data const* data)
 {
-	char *data_string = malloc(8 * sizeof(char) + data->length * sizeof(char));
-	if(data->is_string != 1) 
-		sprintf(data_string, "String: %s", data->content);
-	else
-		sprintf(data_string, "Blob: %p", (void*) &data->content);
+    char* prefix = data->is_string ? "String: " : "Blob: ";
+    char* data_string = malloc((strlen(prefix)+data->length + 2)*sizeof(char));
+	sprintf(data_string,"%s%s", prefix, data->content);
 	return data_string;
 }
 
@@ -64,6 +62,7 @@ unsigned int data_hash (data const* data)
 	unsigned int hash = 0;
 	for (unsigned  int i = 0; i < data->length; i++)
 		hash += (unsigned int) data->content[i];
+    printf("Hash:%d\n", hash);
 	return hash;
 }
 
