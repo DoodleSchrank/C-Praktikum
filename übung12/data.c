@@ -13,6 +13,8 @@ struct data
 	char* const content;
 };
 
+int hashcount = 0;
+
 /* "content" is a null-terminated string. */
 data* data_new_string (char const* content)
 {
@@ -51,7 +53,7 @@ void data_unref (data* data)
 /* Returns a newly-allocated string that must be freed by the caller. */
 char* data_as_string (data const* data)
 {
-	char *data_string = malloc(8 * sizeof(char) + data->length * sizeof(char));
+	char *data_string = malloc(strlen("String: ") * sizeof(char) + data->length * sizeof(char));
 	if(data->is_string != 1) 
 		sprintf(data_string, "String: %s", data->content);
 	else
@@ -61,9 +63,10 @@ char* data_as_string (data const* data)
 
 unsigned int data_hash (data const* data)
 {
-	unsigned int hash = 0;
+	unsigned int hash = 1;
 	for (unsigned  int i = 0; i < data->length; i++)
 		hash += (unsigned int) data->content[i];
+	hash += ++hashcount;
 	return hash;
 }
 
