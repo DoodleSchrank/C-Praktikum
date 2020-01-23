@@ -13,6 +13,8 @@ struct data
 	char* const content;
 };
 
+int hashcount = 0;
+
 /* "content" is a null-terminated string. */
 data* data_new_string (char const* content)
 {
@@ -59,10 +61,11 @@ char* data_as_string (data const* data)
 
 unsigned int data_hash (data const* data)
 {
-	unsigned int hash = 0;
+	unsigned int hash = 1;
 	for (unsigned  int i = 0; i < data->length; i++)
 		hash += (unsigned int) data->content[i];
     printf("Hash:%d\n", hash);
+	hash += ++hashcount;
 	return hash;
 }
 
