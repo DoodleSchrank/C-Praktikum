@@ -33,7 +33,6 @@ int main (void)
 		{
 			/* Save string in data object. */
 			data = data_new_string(content);
-			//printf("%s\n", data->content);
 		}
 		else
 		{

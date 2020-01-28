@@ -4,3 +4,7 @@ LDFLAGS =
 all: exercise
 
 exercise: exercise.o data.o hash.o
+
+clean:
+	rm *.o
+	rm exercise
