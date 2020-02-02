@@ -58,7 +58,7 @@ void data_unref (data* data)
 /* Returns a newly-allocated string that must be freed by the caller. */
 char* data_as_string (data const* data)
 {
-	char* str;
+	char* str = NULL;
 
 	if (data->is_string)
 		asprintf(&str, "String: %s", data->content);
@@ -80,5 +80,20 @@ unsigned int data_hash (data const* data)
 
 int data_cmp (data const* a, data const* b)
 {
+	if (a->length > b->length)
+		return 1;
+	else if (a->length < b->length)
+		return -1;
+	else
+	{
+		for (size_t i = 0; i < a->length; i++)
+		{
+			if (a->content[i] > b->content[i])
+				return 1;
+			else if (a->content[i] < b->content[i])
+				return -1;
+		}
+	}
+
 	return 0;
 }
