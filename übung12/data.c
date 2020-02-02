@@ -12,7 +12,7 @@ struct data
 {
 	// 1 in case of string, 0 for blob
 	short is_string;
-	// content length; includes null-terminator in case of string
+	// content length; does not include null-terminator in case of string
 	size_t length;
 	// reference count
 	unsigned int ref_count;
@@ -23,11 +23,20 @@ struct data
 /* "content" is a null-terminated string. */
 data* data_new_string (char const* content)
 {
-	// length is strlen + 1 because it includes null-terminator;
-	// otherwise we treat strings and blobs equally
-	data* dat = data_new_blob(content, strlen(content)+1);
-	// set data type to string
+	// allocate space for data struct
+	data* dat = malloc(sizeof(data));
+
+	// initialize
 	dat->is_string = 1;
+	dat->length = strlen(content);
+	dat->ref_count = 1;
+	// allocate space for content;
+	// length + 1 because we also copy null-terminator
+	dat->content = malloc(dat->length + 1);
+
+	// copy content to data struct
+	memcpy(dat->content, content, dat->length + 1);
+
 	return dat;
 }
 
